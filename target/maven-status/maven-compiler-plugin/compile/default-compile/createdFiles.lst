@@ -4,6 +4,7 @@ com/editor/model/Session.class
 com/editor/model/SessionCode.class
 com/editor/controller/DashboardServlet.class
 com/editor/dao/DBConnection.class
+com/editor/controller/EndSessionServlet.class
 com/editor/controller/SignupServlet.class
 com/editor/controller/EditorServlet.class
 com/editor/controller/JoinSessionServlet.class

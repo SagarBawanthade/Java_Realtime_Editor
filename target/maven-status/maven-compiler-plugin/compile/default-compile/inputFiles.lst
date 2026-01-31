@@ -1,6 +1,7 @@
 /home/sagarbawanthade/Java/Projects/realtime-editor/src/main/java/com/editor/controller/CreateSessionServlet.java
 /home/sagarbawanthade/Java/Projects/realtime-editor/src/main/java/com/editor/controller/DashboardServlet.java
 /home/sagarbawanthade/Java/Projects/realtime-editor/src/main/java/com/editor/controller/EditorServlet.java
+/home/sagarbawanthade/Java/Projects/realtime-editor/src/main/java/com/editor/controller/EndSessionServlet.java
 /home/sagarbawanthade/Java/Projects/realtime-editor/src/main/java/com/editor/controller/JoinSessionServlet.java
 /home/sagarbawanthade/Java/Projects/realtime-editor/src/main/java/com/editor/controller/LoginServlet.java
 /home/sagarbawanthade/Java/Projects/realtime-editor/src/main/java/com/editor/controller/SignupServlet.java

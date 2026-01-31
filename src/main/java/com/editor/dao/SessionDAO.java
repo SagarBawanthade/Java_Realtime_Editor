@@ -32,6 +32,27 @@ public class SessionDAO {
         return sessionId;
     }
 
+
+    public boolean sessionExists(int sessionId) throws Exception {
+
+        String sql = "SELECT id FROM sessions WHERE id = ?";
+
+        Connection con = DBConnection.getConnection();
+        PreparedStatement ps = con.prepareStatement(sql);
+
+        ps.setInt(1, sessionId);
+
+        ResultSet rs = ps.executeQuery();
+
+        boolean exists = rs.next();
+
+        rs.close();
+        ps.close();
+        con.close();
+
+        return exists;
+    }
+
     // FIND SESSION BY SESSION CODE (JOIN)
     public Integer findSessionIdByCode(String sessionCode) throws Exception {
 
@@ -55,4 +76,18 @@ public class SessionDAO {
 
         return sessionId;
     }
+
+    public void deleteSession(int sessionId) throws Exception {
+
+    String sql = "DELETE FROM sessions WHERE id = ?";
+
+    Connection con = DBConnection.getConnection();
+    PreparedStatement ps = con.prepareStatement(sql);
+
+    ps.setInt(1, sessionId);
+    ps.executeUpdate();
+
+    ps.close();
+    con.close();
+}
 }

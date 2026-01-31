@@ -42,6 +42,7 @@ public class JoinSessionServlet extends HttpServlet {
             // 3️⃣ Save session info
             httpSession.setAttribute("sessionId", sessionId);
             httpSession.setAttribute("sessionCode", sessionCode);
+            httpSession.setAttribute("role", "PARTICIPANT");
 
             // 4️⃣ Redirect to editor
             response.sendRedirect("editor");

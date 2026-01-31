@@ -45,6 +45,7 @@ public class CreateSessionServlet extends HttpServlet {
             // 6️⃣ Save session info in HTTP session
             httpSession.setAttribute("sessionId", sessionId);
             httpSession.setAttribute("sessionCode", sessionCode);
+            httpSession.setAttribute("role", "HOST");
 
             // 7️⃣ Redirect to editor
             response.sendRedirect("editor");

@@ -15,6 +15,17 @@
     String code = codeDAO.getCode(sessionId);
 %>
 
+
+<%
+    String role = (String) session.getAttribute("role");
+%>
+
+<% if ("HOST".equals(role)) { %>
+    <form action="endSession" method="post">
+        <button style="color:red;">End Session</button>
+    </form>
+<% } %>
+
 <!DOCTYPE html>
 <html>
 <head>
