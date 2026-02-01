@@ -11,10 +11,13 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.editor.dao.SessionCodeDAO;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @ServerEndpoint("/ws/editor/{sessionCode}")
 public class CodeEditorSocket {
 
+    // sessionCode -> all websocket sessions
     private static final ConcurrentHashMap<String, Set<Session>> SESSION_USERS =
             new ConcurrentHashMap<>();
 
@@ -23,24 +26,32 @@ public class CodeEditorSocket {
                        @PathParam("sessionCode") String sessionCode) {
 
         SESSION_USERS
-            .computeIfAbsent(sessionCode, k -> ConcurrentHashMap.newKeySet())
-            .add(session);
+                .computeIfAbsent(sessionCode, k -> ConcurrentHashMap.newKeySet())
+                .add(session);
 
         System.out.println("WS CONNECTED: " + sessionCode);
     }
 
     @OnMessage
-    public void onMessage(String code,
+    public void onMessage(String message,
                           @PathParam("sessionCode") String sessionCode) {
 
-        new SessionCodeDAO().updateCodeBySessionCode(sessionCode, code);
+        JsonObject json = JsonParser.parseString(message).getAsJsonObject();
+        String type = json.get("type").getAsString();
 
+        // Save code only for CODE messages
+        if ("CODE".equals(type)) {
+            String code = json.get("code").getAsString();
+            new SessionCodeDAO().updateCodeBySessionCode(sessionCode, code);
+        }
+
+        // Broadcast message to all users in same session
         Set<Session> users = SESSION_USERS.get(sessionCode);
         if (users == null) return;
 
         for (Session s : users) {
             if (s.isOpen()) {
-                s.getAsyncRemote().sendText(code);
+                s.getAsyncRemote().sendText(message);
             }
         }
     }
