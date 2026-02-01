@@ -20,7 +20,7 @@ public class CreateSessionServlet extends HttpServlet {
             User user = (User) httpSession.getAttribute("user");
 
             if (user == null) {
-                response.sendRedirect("login.jsp");
+                response.sendRedirect("login");
                 return;
             }
 

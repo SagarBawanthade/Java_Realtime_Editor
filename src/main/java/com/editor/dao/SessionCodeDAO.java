@@ -70,4 +70,25 @@ public class SessionCodeDAO {
         ps.close();
         con.close();
     }
+
+    public void updateCodeBySessionCode(String sessionCode, String code) {
+
+    String sql =
+        "UPDATE session_code sc " +
+        "JOIN sessions s ON sc.session_id = s.id " +
+        "SET sc.code = ?, sc.updated_at = NOW() " +
+        "WHERE s.session_code = ?";
+
+    try (Connection con = DBConnection.getConnection();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+
+        ps.setString(1, code);
+        ps.setString(2, sessionCode);
+        ps.executeUpdate();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
 }

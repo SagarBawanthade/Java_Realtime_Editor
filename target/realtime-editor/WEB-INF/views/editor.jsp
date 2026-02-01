@@ -1,52 +1,39 @@
-<%@ page import="com.editor.model.User" %>
-<%@ page import="com.editor.dao.SessionCodeDAO" %>
-
-<%
-    User user = (User) session.getAttribute("user");
-    Integer sessionId = (Integer) session.getAttribute("sessionId");
-    String sessionCode = (String) session.getAttribute("sessionCode");
-
-    if (user == null || sessionId == null) {
-        response.sendRedirect("login.jsp");
-        return;
-    }
-
-    SessionCodeDAO codeDAO = new SessionCodeDAO();
-    String code = codeDAO.getCode(sessionId);
-%>
-
-
-<%
-    String role = (String) session.getAttribute("role");
-%>
-
-<% if ("HOST".equals(role)) { %>
-    <form action="endSession" method="post">
-        <button style="color:red;">End Session</button>
-    </form>
-<% } %>
-
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Editor</title>
+    <title>Real-Time Editor</title>
 </head>
 <body>
 
-<h3>Session Code: <%= sessionCode %></h3>
+<h3>Session Code: <%= session.getAttribute("sessionCode") %></h3>
 
-<textarea id="codeArea" rows="20" cols="80"><%= code %></textarea>
-
-<br><br>
-
-<button onclick="runCode()">Run</button>
-
-<pre id="output"></pre>
+<textarea id="codeArea" rows="20" cols="80"></textarea>
 
 <script>
-    function runCode() {
-        alert("Run will be implemented next");
-    }
+    const sessionCode = "<%= session.getAttribute("sessionCode") %>";
+    const editor = document.getElementById("codeArea");
+
+    // const socket = new WebSocket(
+    //     "ws://localhost:8080/realtime-editor/ws/editor/" + sessionCode
+    // );
+
+    const socket = new WebSocket("ws://localhost:8080/ws/editor/" + sessionCode);
+
+    let remote = false;
+
+    socket.onopen = () => console.log("WebSocket connected");
+
+    socket.onmessage = (e) => {
+        remote = true;
+        editor.value = e.data;
+        remote = false;
+    };
+
+    editor.addEventListener("input", () => {
+        if (!remote) {
+            socket.send(editor.value);
+        }
+    });
 </script>
 
 </body>

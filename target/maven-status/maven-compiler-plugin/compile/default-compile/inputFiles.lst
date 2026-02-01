@@ -14,3 +14,4 @@
 /home/sagarbawanthade/Java/Projects/realtime-editor/src/main/java/com/editor/model/SessionCode.java
 /home/sagarbawanthade/Java/Projects/realtime-editor/src/main/java/com/editor/model/SessionUser.java
 /home/sagarbawanthade/Java/Projects/realtime-editor/src/main/java/com/editor/model/User.java
+/home/sagarbawanthade/Java/Projects/realtime-editor/src/main/java/com/editor/websocket/CodeEditorSocket.java

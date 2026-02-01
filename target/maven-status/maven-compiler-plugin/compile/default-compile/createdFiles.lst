@@ -1,6 +1,7 @@
 com/editor/controller/CreateSessionServlet.class
 com/editor/dao/SessionUserDAO.class
 com/editor/model/Session.class
+com/editor/websocket/CodeEditorSocket.class
 com/editor/model/SessionCode.class
 com/editor/controller/DashboardServlet.class
 com/editor/dao/DBConnection.class
