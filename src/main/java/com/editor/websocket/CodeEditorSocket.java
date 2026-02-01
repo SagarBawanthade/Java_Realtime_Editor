@@ -33,7 +33,8 @@ public class CodeEditorSocket {
     }
 
     @OnMessage
-    public void onMessage(String message,
+    public void onMessage(String message, 
+        Session session,
                           @PathParam("sessionCode") String sessionCode) {
 
         JsonObject json = JsonParser.parseString(message).getAsJsonObject();
@@ -50,10 +51,10 @@ public class CodeEditorSocket {
         if (users == null) return;
 
         for (Session s : users) {
-            if (s.isOpen()) {
-                s.getAsyncRemote().sendText(message);
-            }
-        }
+            if (s.isOpen() && !s.equals(session)) {  
+            s.getAsyncRemote().sendText(message);
+    }
+}
     }
 
     @OnClose
