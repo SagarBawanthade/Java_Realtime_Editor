@@ -984,8 +984,10 @@
 
     // WebSocket connection
     function connectWebSocket() {
-        const wsUrl = "ws://" + window.location.host + "/ws/editor/" + sessionCode;
-        
+       
+        const contextPath = "<%= request.getContextPath() %>";
+        const wsUrl = "ws://" + window.location.host + contextPath + "/ws/editor/" + sessionCode;
+
         addTerminalLine("Connecting to WebSocket...", "debug", "⚡");
         statusDot.className = "status-dot connecting";
         statusText.textContent = "Connecting...";
